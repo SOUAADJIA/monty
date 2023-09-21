@@ -1,5 +1,5 @@
 #include "monty.h"
-
+#include <ctype.h>
 /**
  * main - Entry point for the Monty interpreter.
  * @argc: The number of command-line arguments.
@@ -45,15 +45,32 @@ void cleanupStack(stack_t **stack)
 void tokenizeAndExecute(FILE *file, stack_t **stack)
 {
 	char *line = NULL;
-	size_t len = 0;
+	size_t len = 0, i;
 	unsigned int line_number = 0;
-	char *opcode;
-
+	char *opcode, *cleaned_line;
+	int is_whitespace = 1;
 	while (getline(&line, &len, file) != -1)
 	{
 		line_number++;
-		opcode = strtok(line, " \t\n");
-
+		cleaned_line = strtok(line, "\n");
+		if (cleaned_line == NULL)
+		{
+			/* Skip empty lines */
+			continue;
+		}
+		for (i = 0; i < strlen(cleaned_line); i++)
+		{
+			if (!isspace(cleaned_line[i]))
+			{
+				is_whitespace = 0;
+				break;
+			}
+		}
+		if (is_whitespace)
+		{
+			continue;
+		}
+		opcode = strtok(cleaned_line, " \t\n");
 		if (opcode != NULL)
 		{
 			void (*handler)(stack_t **, unsigned int) = func(opcode);
@@ -64,9 +81,9 @@ void tokenizeAndExecute(FILE *file, stack_t **stack)
 				handleUnknownInstruction(opcode, line_number);
 		}
 	}
-
 	free(line);
 }
+
 /**
  * handleUnknownInstruction - Handle an unknown Monty instruction.
  * @opcode: The unknown opcode.
