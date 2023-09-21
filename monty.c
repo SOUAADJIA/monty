@@ -39,7 +39,6 @@ void processMontyFile(const char *filename)
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
-
 	while (getline(&line, &len, file) != -1)
 	{
 		line_number++;
@@ -49,14 +48,16 @@ void processMontyFile(const char *filename)
 			void (*handler)(stack_t **, unsigned int) = func(opcode);
 
 			if (handler != NULL)
+			{
 				handler(&stack, line_number);
+			}
 			else
+			{
 				handleUnknownInstruction(opcode, line_number);
+			}
 		}
 	}
-
 	free(line);
-
 	while (stack != NULL)
 	{
 		stack_t *temp = stack;
@@ -64,7 +65,6 @@ void processMontyFile(const char *filename)
 		stack = stack->next;
 		free(temp);
 	}
-
 	fclose(file);
 }
 
@@ -90,9 +90,13 @@ void tokenizeAndExecute(FILE *file, stack_t **stack)
 			void (*handler)(stack_t **, unsigned int) = func(opcode);
 
 			if (handler != NULL)
+			{
 				handler(stack, line_number);
+			}
 			else
+			{
 				handleUnknownInstruction(opcode, line_number);
+			}
 		}
 	}
 
