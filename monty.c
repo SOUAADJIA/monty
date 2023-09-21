@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
 
 	return (EXIT_SUCCESS);
 }
-
 /**
  * cleanupStack - Frees the memory allocated for the stack.
  * @stack: A pointer to the top of the stack.
@@ -37,7 +36,6 @@ void cleanupStack(stack_t **stack)
 		free(temp);
 	}
 }
-
 /**
  * tokenizeAndExecute - Tokenize and execute Monty instructions from a file.
  * @file: The Monty bytecode file.
@@ -69,7 +67,6 @@ void tokenizeAndExecute(FILE *file, stack_t **stack)
 
 	free(line);
 }
-
 /**
  * handleUnknownInstruction - Handle an unknown Monty instruction.
  * @opcode: The unknown opcode.
@@ -81,7 +78,6 @@ void handleUnknownInstruction(const char *opcode, unsigned int line_number)
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 	exit(EXIT_FAILURE);
 }
-
 /**
  * processMontyFile - Process a Monty bytecode file.
  * @filename: The name of the Monty bytecode file.
@@ -104,6 +100,7 @@ int processMontyFile(const char *filename)
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		return (EXIT_FAILURE);
 	}
+
 	while (getline(&line, &len, file) != -1)
 	{
 		line_number++;
@@ -129,4 +126,3 @@ int processMontyFile(const char *filename)
 
 	return (result);
 }
-
