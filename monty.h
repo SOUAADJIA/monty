@@ -19,6 +19,7 @@ typedef struct stack_s
 	struct stack_s *prev;
 	struct stack_s *next;
 } stack_t;
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -36,18 +37,16 @@ typedef struct instruction_s
 /**
  * Function prototypes
  */
-
 void op_push(stack_t **stack, unsigned int line_number);
 void op_pall(stack_t **stack, unsigned int line_number);
 
-
 /**
- * helpers function prototypes
+ * Helper function prototypes
  */
 void (*func(char *tokens))(stack_t **stack, unsigned int num_line);
-
-void processMontyFile(const char *filename);
+int processMontyFile(const char *filename);
 void tokenizeAndExecute(FILE *file, stack_t **stack);
 void handleUnknownInstruction(const char *opcode, unsigned int line_number);
 
 #endif /* MONTY_H */
+
