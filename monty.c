@@ -47,12 +47,19 @@ void tokenizeAndExecute(FILE *file, stack_t **stack)
 	char *line = NULL;
 	size_t len = 0;
 	unsigned int line_number = 0;
-	char *opcode;
+	char *opcode, *cut_line;
 
 	while (getline(&line, &len, file) != -1)
 	{
 		line_number++;
-		opcode = strtok(line, " \t\n");
+
+		cut_line = strtok(line, "\n");
+		if (cut_line == NULL || cut_line[0] == '#')
+		{
+			continue;
+		}
+
+		opcode = strtok(cut_line, " \t\n");
 
 		if (opcode != NULL)
 		{
