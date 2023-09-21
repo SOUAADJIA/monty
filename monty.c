@@ -1,7 +1,4 @@
 #include "monty.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 /**
  * main - Entry point for the Monty interpreter.
  * @argc: The number of command-line arguments.
@@ -21,7 +18,6 @@ int main(int argc, char *argv[])
 
 	return (EXIT_SUCCESS);
 }
-
 /**
  * processMontyFile - Process a Monty bytecode file.
  * @filename: The name of the Monty bytecode file.
@@ -50,13 +46,15 @@ void processMontyFile(const char *filename)
 		{
 			if (strcmp(opcode, "push") == 0)
 				push(&stack, line_number);
+			else if (strcmp(opcode, "pall") == 0)
+			{
+				pall(&stack, line_number);
+			}
 			else
 				handleUnknownInstruction(opcode, line_number);
 		}
 	}
-
 	free(line);
-
 	while (stack != NULL)
 	{
 		stack_t *temp = stack;
@@ -64,7 +62,6 @@ void processMontyFile(const char *filename)
 		stack = stack->next;
 		free(temp);
 	}
-
 	fclose(file);
 }
 
@@ -91,9 +88,9 @@ void tokenizeAndExecute(FILE *file, stack_t **stack)
 			{
 				push(stack, line_number);
 			}
-			else if (strcmp(opcode, "pull") == 0)
+			else if (strcmp(opcode, "pall") == 0)
 			{
-				pull(stack, line_number);
+				pall(stack, line_number);
 			}
 			else
 			{

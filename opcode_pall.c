@@ -3,12 +3,12 @@
 #include <stdlib.h>
 
 /**
- * pull - Removes the top element of the stack.
+ * pall - Removes the top element of the stack.
  * @stack: A pointer to the top of the stack.
  * @line_number: The current line number in the Monty bytecode file.
  * Return: nothing
  */
-void pull(stack_t **stack, unsigned int line_number)
+void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
 
