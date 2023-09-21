@@ -1,4 +1,5 @@
 #include "monty.h"
+
 /**
  * main - Entry point for the Monty interpreter.
  * @argc: The number of command-line arguments.
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
 
 	return (EXIT_SUCCESS);
 }
+
 /**
  * processMontyFile - Process a Monty bytecode file.
  * @filename: The name of the Monty bytecode file.
@@ -44,17 +46,17 @@ void processMontyFile(const char *filename)
 		opcode = strtok(line, " \t\n");
 		if (opcode != NULL)
 		{
-			if (strcmp(opcode, "push") == 0)
-				push(&stack, line_number);
-			else if (strcmp(opcode, "pall") == 0)
-			{
-				pall(&stack, line_number);
-			}
+			void (*handler)(stack_t **, unsigned int) = func(opcode);
+
+			if (handler != NULL)
+				handler(&stack, line_number);
 			else
 				handleUnknownInstruction(opcode, line_number);
 		}
 	}
+
 	free(line);
+
 	while (stack != NULL)
 	{
 		stack_t *temp = stack;
@@ -62,6 +64,7 @@ void processMontyFile(const char *filename)
 		stack = stack->next;
 		free(temp);
 	}
+
 	fclose(file);
 }
 
@@ -84,18 +87,12 @@ void tokenizeAndExecute(FILE *file, stack_t **stack)
 
 		if (opcode != NULL)
 		{
-			if (strcmp(opcode, "push") == 0)
-			{
-				push(stack, line_number);
-			}
-			else if (strcmp(opcode, "pall") == 0)
-			{
-				pall(stack, line_number);
-			}
+			void (*handler)(stack_t **, unsigned int) = func(opcode);
+
+			if (handler != NULL)
+				handler(stack, line_number);
 			else
-			{
 				handleUnknownInstruction(opcode, line_number);
-			}
 		}
 	}
 
@@ -112,3 +109,4 @@ void handleUnknownInstruction(const char *opcode, unsigned int line_number)
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 	exit(EXIT_FAILURE);
 }
+

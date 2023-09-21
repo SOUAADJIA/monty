@@ -37,13 +37,15 @@ typedef struct instruction_s
  * Function prototypes
  */
 
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
+void op_push(stack_t **stack, unsigned int line_number);
+void op_pall(stack_t **stack, unsigned int line_number);
 
 
 /**
  * helpers function prototypes
  */
+void (*func(char *tokens))(stack_t **stack, unsigned int num_line);
+
 void processMontyFile(const char *filename);
 void tokenizeAndExecute(FILE *file, stack_t **stack);
 void handleUnknownInstruction(const char *opcode, unsigned int line_number);

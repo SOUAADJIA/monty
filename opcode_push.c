@@ -4,12 +4,12 @@
 #include <ctype.h>
 #include <string.h>
 /**
- * push - Pushes an integer onto the stack
+ * op_push - Pushes an integer onto the stack
  * @stack: A pointer to the top of the stack
  * @line_number: The current line number in the Monty bytecode file
  * Return: nothing
  */
-void push(stack_t **stack, unsigned int line_number)
+void op_push(stack_t **stack, unsigned int line_number)
 {
 	char *argument = strtok(NULL, " \n");
 	int value = atoi(argument); /*Convert the argument to an integer*/
