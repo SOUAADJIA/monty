@@ -12,6 +12,7 @@ void (*func(char *tokens))(stack_t **stack, unsigned int num_line)
 	instruction_t ops[] = {
 		{"push", op_push},
 		{"pall", op_pall},
+		{"pint", op_pint},
 		/*others*/
 		{NULL, NULL}
 	};
