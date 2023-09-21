@@ -15,6 +15,7 @@ void (*func(char *tokens))(stack_t **stack, unsigned int num_line)
 		{"pint", op_pint},
 		{"pop", op_pop},
 		{"swap", op_swap},
+		{"add", op_add},
 		/*others*/
 		{NULL, NULL}
 	};
